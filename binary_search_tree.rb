@@ -29,9 +29,16 @@ def build_tree(array, start=0, last=0)
   return root
 end
 
+class Tree
+  attr_reader :root
+  def initialize(array)
+    @root = build_tree(array)
+  end
+
+end
 #p build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-
-
+tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+p tree.root
 =begin
 ####### Fensus said to use ##########
  def pretty_print(node = root, prefix="", is_left = true)
