@@ -52,6 +52,46 @@ class Tree
     end   
   end
 
+  def delete(node, value)
+    
+    if value < node.data
+      if node.left.data == value
+        ### if no children then delete ###
+        if node.left.left == nil && node.left.right == nil
+          node.left = nil
+          return @root
+          #### otherwise, set it to child ####
+        else
+          if node.left.left == nil
+            node.left = node.left.right
+          else
+            node.left = node.left.left
+          end
+        end
+      else
+        delete(node.left, value)
+      end
+##### look to the right ##########
+    else
+      if node.right.data == value
+      ### if no children then delete ###
+        if node.right.left == nil && node.right.right == nil
+          node.right = nil
+          return @root
+        #### otherwise, set it to child ####
+        else
+          if node.right.left == nil
+            node.right = node.right.right
+          else
+            node.right = node.right.left
+          end
+        end
+      else
+        delete(node.right, value)
+      end
+    end
+  end
+
   def find(node, value)
     if value != node.data
       if value < node.data
@@ -79,6 +119,9 @@ end
 
 #p build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-#p tree.root.left.data
-#tree.find(tree.root, 6345)
-pretty_print(tree.find(tree.root, 6345))
+#p tree.root.left.left.left.data
+tree.delete(tree.root, 6345)
+pretty_print(tree.root)
+
+######## works great. However, if node has 2 children (left AND right) it doesn't work
+######## works if node has either left OR right child. Need condition for both
