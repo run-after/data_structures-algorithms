@@ -50,7 +50,18 @@ class Tree
       end
       insert(node.right, value)
     end   
+  end
 
+  def find(node, value)
+    if value != node.data
+      if value < node.data
+        find(node.left, value)
+      else
+        find(node.right, value)
+      end
+    else
+      return node
+    end   
   end
 
 end
@@ -69,5 +80,5 @@ end
 #p build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 #p tree.root.left.data
-tree.insert(tree.root, 24)
-pretty_print(tree.root)
+#tree.find(tree.root, 6345)
+pretty_print(tree.find(tree.root, 6345))
