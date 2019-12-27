@@ -35,16 +35,39 @@ class Tree
     @root = build_tree(array)
   end
 
+  def insert(node, value)
+    #binding.pry
+    if value < node.data
+      if node.left == nil
+        node.left = Node.new(value)
+        return @root
+      end
+      insert(node.left, value)
+    else
+      if node.right == nil
+        node.right = Node.new(value)
+        return @root
+      end
+      insert(node.right, value)
+    end   
+
+  end
+
 end
+########### thanks Fensus ####################
+def pretty_print(node = root, prefix="", is_left = true)
+  pretty_print(node.right, "#{prefix}#{is_left ? "│   " : "    "}", false) if node.right
+  puts "#{prefix}#{is_left ? "└── " : "┌── "}#{node.data.to_s}"
+  pretty_print(node.left, "#{prefix}#{is_left ? "    " : "│   "}", true) if node.left
+end
+
+
+
+
+
+
 #p build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-p tree.root
-=begin
-####### Fensus said to use ##########
- def pretty_print(node = root, prefix="", is_left = true)
-    pretty_print(node.right, "#{prefix}#{is_left ? "│   " : "    "}", false) if node.right
-    puts "#{prefix}#{is_left ? "└── " : "┌── "}#{node.data.to_s}"
-    pretty_print(node.left, "#{prefix}#{is_left ? "    " : "│   "}", true) if node.left
-  end
-=end
-
+#p tree.root.left.data
+tree.insert(tree.root, 24)
+pretty_print(tree.root)
