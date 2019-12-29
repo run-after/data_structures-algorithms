@@ -53,9 +53,11 @@ class Tree
   end
 
   def delete(node, value)
-    
+    #binding.pry
     if value < node.data
-      if node.left.data == value
+      if node.left == nil
+        puts "#{value} not in tree"
+      elsif node.left.data == value
         ### if no children then delete ###
         if node.left.left == nil && node.left.right == nil
           node.left = nil
@@ -64,8 +66,11 @@ class Tree
         else
           if node.left.left == nil
             node.left = node.left.right
+            
           else
+            temp = node.left.right
             node.left = node.left.left
+            node.left.right = temp
           end
         end
       else
@@ -73,7 +78,9 @@ class Tree
       end
 ##### look to the right ##########
     else
-      if node.right.data == value
+      if node.right == nil
+        puts "#{value} not in tree"
+      elsif node.right.data == value
       ### if no children then delete ###
         if node.right.left == nil && node.right.right == nil
           node.right = nil
@@ -83,7 +90,9 @@ class Tree
           if node.right.left == nil
             node.right = node.right.right
           else
+            temp = node.right.right
             node.right = node.right.left
+            node.right.right = temp
           end
         end
       else
@@ -120,8 +129,7 @@ end
 #p build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 #p tree.root.left.left.left.data
-tree.delete(tree.root, 6345)
+tree.delete(tree.root, 2)
 pretty_print(tree.root)
 
-######## works great. However, if node has 2 children (left AND right) it doesn't work
-######## works if node has either left OR right child. Need condition for both
+######## delete works great. However, if you try to delete the root node, it doesn't work
