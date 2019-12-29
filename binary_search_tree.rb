@@ -37,24 +37,53 @@ class Tree
 
   def insert(node, value)
     #binding.pry
-    if value < node.data
-      if node.left == nil
-        node.left = Node.new(value)
-        return @root
+    if value.is_a?(Numeric)
+      if value < node.data
+        if node.left == nil
+          node.left = Node.new(value)
+          return @root
+        end
+        insert(node.left, value)
+      else
+        if node.right == nil
+          node.right = Node.new(value)
+          return @root
+        end
+        insert(node.right, value)
       end
-      insert(node.left, value)
-    else
-      if node.right == nil
-        node.right = Node.new(value)
-        return @root
-      end
-      insert(node.right, value)
-    end   
+    elsif value.is_a?(Node)
+      if value.data < node.data
+        if node.left == nil
+          node.left = value
+          return @root
+        end
+        insert(node.left, value)
+      else
+        if node.right == nil
+          node.right = value
+          return @root
+        end#
+        insert(node.right, value)
+      end#
+    ### if you try to insert something that isn't a number or a node ###
+    else#
+      puts "Error: value needs to be a number"
+    end
   end
 
   def delete(node, value)
     #binding.pry
-    if value < node.data
+    ### if root node ###
+    if value == node.data
+      current_right = node.right
+      temp_left = node.left.left
+      temp_right = node.left.right
+      @root = node.left
+      @root.right = current_right
+      insert(@root, temp_right)
+      
+    ### look to the left ###
+    elsif value < node.data# changed from if to elsif
       if node.left == nil
         puts "#{value} not in tree"
       elsif node.left.data == value
@@ -76,7 +105,7 @@ class Tree
       else
         delete(node.left, value)
       end
-##### look to the right ##########
+    ### look to the right ###
     else
       if node.right == nil
         puts "#{value} not in tree"
@@ -129,7 +158,6 @@ end
 #p build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 #p tree.root.left.left.left.data
-tree.delete(tree.root, 2)
+tree.delete(tree.root, 8)
 pretty_print(tree.root)
 
-######## delete works great. However, if you try to delete the root node, it doesn't work
