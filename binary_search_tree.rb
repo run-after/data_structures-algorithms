@@ -142,6 +142,29 @@ class Tree
     end   
   end
 
+  def level_order
+    #binding.pry
+    ### just to get us started ###
+    queue = []
+    array = []
+    node = @root
+    ### enqueue node ###
+    queue << node
+    ### visit node ###
+    until queue.size == 0
+      temp = queue.shift
+      array << temp.data
+      #puts temp.data
+      ### if children exist, enqueue them ###
+      queue << temp.left if temp.left != nil
+      queue << temp.right if temp.right != nil
+    end
+    
+    p array
+### this puts all node's values into an array ###
+
+  end
+
 end
 ########### thanks Fensus ####################
 def pretty_print(node = root, prefix="", is_left = true)
@@ -157,7 +180,7 @@ end
 
 #p build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-#p tree.root.left.left.left.data
-tree.delete(tree.root, 8)
-pretty_print(tree.root)
+#tree.delete(tree.root ,8)
+tree.level_order
+#pretty_print(tree.root)
 
