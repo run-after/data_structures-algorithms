@@ -148,8 +148,9 @@ class Tree
     queue = []
     array = []
     node = @root
-    ### enqueue node ###
+  
     queue << node
+
     ### visit node ###
     until queue.size == 0
       temp = queue.shift
@@ -161,8 +162,48 @@ class Tree
     end
 ### if no block given, return the array full of values ###    
     p array if !block_given?
+  end
 
+  def inorder(node=@root, array=[])
 
+    #binding.pry
+    return if node == nil
+
+    inorder(node.left) 
+    puts node.data
+    inorder(node.right)
+    
+    #p array if array.size > 0
+### works, but not yielding to block ###
+  end
+
+  def preorder(node=@root, array=[])
+    binding.pry
+    return if node == nil
+    if !block_given?
+      array << node.data
+    else
+      yield node
+    end
+
+    preorder(node.left) { |x| "Node: #{x}" }
+    preorder(node.right) { |x| "Node: #{x}" }
+    
+    p array if array.size > 0
+### works, but not yielding to block ###
+  end
+
+  def postorder(node=@root, array=[])
+
+    #binding.pry
+    return if node == nil
+
+    postorder(node.left) 
+    postorder(node.right)
+    puts node.data
+    
+    #p array if array.size > 0
+### works, but not yielding to block ###
   end
 
 end
@@ -180,7 +221,12 @@ end
 
 #p build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+#tree.insert(tree.root, 2)
 #tree.delete(tree.root ,8)
-tree.level_order#{|x| puts "Node: #{x.data}"}
+#p tree.find(tree.root, 23)
+#tree.level_order#{ |x| puts "Node: #{x.data}" }
+#tree.inorder{ |x| "Node: #{x}" }
+tree.preorder{ |x| "Node: #{x.data}" }
+#tree.postorder{ |x| "Node: #{x}" }
 #pretty_print(tree.root)
 
