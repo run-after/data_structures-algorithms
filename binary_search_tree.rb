@@ -153,15 +153,15 @@ class Tree
     ### visit node ###
     until queue.size == 0
       temp = queue.shift
+      yield temp if block_given?
       array << temp.data
-      #puts temp.data
       ### if children exist, enqueue them ###
       queue << temp.left if temp.left != nil
       queue << temp.right if temp.right != nil
     end
-    
-    p array
-### this puts all node's values into an array ###
+### if no block given, return the array full of values ###    
+    p array if !block_given?
+
 
   end
 
@@ -181,6 +181,6 @@ end
 #p build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 #tree.delete(tree.root ,8)
-tree.level_order
+tree.level_order#{|x| puts "Node: #{x.data}"}
 #pretty_print(tree.root)
 
