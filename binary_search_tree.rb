@@ -164,46 +164,31 @@ class Tree
     p array if !block_given?
   end
 
-  def inorder(node=@root, array=[])
-
-    #binding.pry
+  def inorder(node=@root, array=[], &block)
     return if node == nil
-
-    inorder(node.left) 
-    puts node.data
-    inorder(node.right)
-    
-    #p array if array.size > 0
-### works, but not yielding to block ###
+    inorder(node.left, array, &block) 
+    array << node.data if !block_given?
+    yield node if block_given?
+    inorder(node.right, array, &block)
+    return array if !block_given?
   end
 
-  def preorder(node=@root, array=[])
-    binding.pry
+  def preorder(node=@root, array=[], &block)
     return if node == nil
-    if !block_given?
-      array << node.data
-    else
-      yield node
-    end
-
-    preorder(node.left) { |x| "Node: #{x}" }
-    preorder(node.right) { |x| "Node: #{x}" }
-    
-    p array if array.size > 0
-### works, but not yielding to block ###
+    array << node.data if !block_given?
+    yield node if block_given?
+    preorder(node.left, array, &block) 
+    preorder(node.right, array, &block)
+    return array if !block_given?
   end
 
-  def postorder(node=@root, array=[])
-
-    #binding.pry
+  def postorder(node=@root, array=[], &block)
     return if node == nil
-
-    postorder(node.left) 
-    postorder(node.right)
-    puts node.data
-    
-    #p array if array.size > 0
-### works, but not yielding to block ###
+    postorder(node.left, array, &block) 
+    postorder(node.right, array, &block)
+    array << node.data if !block_given?
+    yield node if block_given?
+    return array if !block_given?
   end
 
 end
@@ -225,8 +210,8 @@ tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 #tree.delete(tree.root ,8)
 #p tree.find(tree.root, 23)
 #tree.level_order#{ |x| puts "Node: #{x.data}" }
-#tree.inorder{ |x| "Node: #{x}" }
-tree.preorder{ |x| "Node: #{x.data}" }
-#tree.postorder{ |x| "Node: #{x}" }
+#tree.inorder{ |x| puts "Node: #{x.data}" }
+#tree.preorder{ |x| puts "Node: #{x.data}" }
+tree.postorder{ |x| puts "Node: #{x.data}" }
 #pretty_print(tree.root)
 
