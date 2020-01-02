@@ -215,6 +215,15 @@ class Tree
     end
   end
 
+  def rebalance!
+
+    temp = self.level_order
+    
+    balanced = build_tree(temp)
+    @root = balanced
+
+  end
+
 end
 
 ########### thanks Fensus ####################
@@ -230,12 +239,13 @@ end
 
 
 #p build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-tree = Tree.new([10, 9, 8 , 7, 6, 5, 4, 3, 2, 1])
+#tree = Tree.new([10, 9, 8 , 7, 6, 5, 4, 3, 2, 1])
 #tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-tree.insert(tree.root, 6346)
-tree.insert(tree.root, 6347)
-tree.insert(tree.root, 13)
-#tree.insert(tree.root, 14)
+tree = Tree.new([45, 34, 25, 33, 30, 20, 16, 44, 29, 75, 3])
+tree.insert(tree.root, 7)
+tree.insert(tree.root, 6)
+tree.insert(tree.root, 10)
+tree.insert(tree.root, 1)
 #tree.delete(tree.root ,11)
 #p tree.find(tree.root, 23)
 #tree.level_order#{ |x| puts "Node: #{x.data}" }
@@ -244,5 +254,7 @@ tree.insert(tree.root, 13)
 #tree.postorder{ |x| puts "Node: #{x.data}" }
 #p tree.depth(tree.root)
 p tree.balanced?(tree.root)
+pretty_print(tree.root)
+tree.rebalance!
 
 pretty_print(tree.root)
