@@ -201,6 +201,20 @@ class Tree
     return deepest
   end
 
+  def balanced?(node, level=0)
+
+    return if node == nil
+    level += 1
+    right = depth(node.right, level)
+    left = depth(node.left, level)
+
+    if left == right || left + 1 == right || left - 1 == right
+      return true
+    else
+      return false
+    end
+  end
+
 end
 
 ########### thanks Fensus ####################
@@ -221,14 +235,14 @@ tree = Tree.new([10, 9, 8 , 7, 6, 5, 4, 3, 2, 1])
 tree.insert(tree.root, 6346)
 tree.insert(tree.root, 6347)
 tree.insert(tree.root, 13)
-tree.insert(tree.root, 14)
+#tree.insert(tree.root, 14)
 #tree.delete(tree.root ,11)
 #p tree.find(tree.root, 23)
 #tree.level_order#{ |x| puts "Node: #{x.data}" }
 #tree.inorder{ |x| puts "Node: #{x.data}" }
 #tree.preorder{ |x| puts "Node: #{x.data}" }
 #tree.postorder{ |x| puts "Node: #{x.data}" }
-p tree.depth(tree.root)
+#p tree.depth(tree.root)
+p tree.balanced?(tree.root)
 
 pretty_print(tree.root)
-
