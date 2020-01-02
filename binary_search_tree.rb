@@ -143,25 +143,20 @@ class Tree
   end
 
   def level_order
-    #binding.pry
-    ### just to get us started ###
     queue = []
     array = []
     node = @root
   
     queue << node
 
-    ### visit node ###
     until queue.size == 0
       temp = queue.shift
       yield temp if block_given?
       array << temp.data
-      ### if children exist, enqueue them ###
       queue << temp.left if temp.left != nil
       queue << temp.right if temp.right != nil
-    end
-### if no block given, return the array full of values ###    
-    p array if !block_given?
+    end   
+    return array if !block_given?
   end
 
   def inorder(node=@root, array=[], &block)
@@ -191,7 +186,23 @@ class Tree
     return array if !block_given?
   end
 
+  def depth(node, level=0, deepest=0)
+   # binding.pry
+    if node == nil
+      if deepest < level
+        deepest = level
+      end
+    end
+    return deepest if node == nil
+    level += 1
+    deepest = depth(node.right, level, deepest)
+    deepest = depth(node.left, level, deepest)
+    
+    return deepest
+  end
+
 end
+
 ########### thanks Fensus ####################
 def pretty_print(node = root, prefix="", is_left = true)
   pretty_print(node.right, "#{prefix}#{is_left ? "│   " : "    "}", false) if node.right
@@ -205,13 +216,19 @@ end
 
 
 #p build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-#tree.insert(tree.root, 2)
-#tree.delete(tree.root ,8)
+tree = Tree.new([10, 9, 8 , 7, 6, 5, 4, 3, 2, 1])
+#tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+tree.insert(tree.root, 6346)
+tree.insert(tree.root, 6347)
+tree.insert(tree.root, 13)
+tree.insert(tree.root, 14)
+#tree.delete(tree.root ,11)
 #p tree.find(tree.root, 23)
 #tree.level_order#{ |x| puts "Node: #{x.data}" }
 #tree.inorder{ |x| puts "Node: #{x.data}" }
 #tree.preorder{ |x| puts "Node: #{x.data}" }
-tree.postorder{ |x| puts "Node: #{x.data}" }
-#pretty_print(tree.root)
+#tree.postorder{ |x| puts "Node: #{x.data}" }
+p tree.depth(tree.root)
+
+pretty_print(tree.root)
 
