@@ -2,7 +2,7 @@ class Board
   
   def initialize
 
-
+    a1 =0
 
   end
 
