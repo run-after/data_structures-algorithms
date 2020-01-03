@@ -35,8 +35,9 @@ class Tree
     @root = build_tree(array)
   end
 
-  def insert(node, value)
+  def insert(node=self.root, value)
     #binding.pry
+    
     if value.is_a?(Numeric)
       if value < node.data
         if node.left == nil
@@ -201,8 +202,8 @@ class Tree
     return deepest
   end
 
-  def balanced?(node, level=0)
-
+  def balanced?(level=0)
+    node = self.root
     return if node == nil
     level += 1
     right = depth(node.right, level)
@@ -219,9 +220,8 @@ class Tree
 
     temp = self.level_order
     
-    balanced = build_tree(temp)
-    @root = balanced
-
+    @root = build_tree(temp)
+    
   end
 
 end
@@ -235,17 +235,53 @@ end
 
 
 
+tree = Tree.new(Array.new(15){rand(1..100)})
+puts "Tree balanced: #{tree.balanced?}."
+print "Level order:"
+tree.level_order{ |x| print " #{x.data}" }
+puts
+print "Preorder:"
+tree.preorder{ |x| print " #{x.data}" }
+puts
+print "Inorder:"
+tree.inorder{ |x| print " #{x.data}" }
+puts
+print "Postorder:"
+tree.postorder{ |x| print " #{x.data}" }
+puts
+tree.insert(105)
+puts "Added!"
+tree.insert(107)
+puts "Added!"
+tree.insert(109)
+puts "Added!"
+puts "Tree balanced: #{tree.balanced?}."
+puts "Reobalancing tree..."
+tree.rebalance!
+puts "Tree balanced: #{tree.balanced?}."
+print "Level order:"
+tree.level_order{ |x| print " #{x.data}" }
+puts
+print "Preorder:"
+tree.preorder{ |x| print " #{x.data}" }
+puts
+print "Inorder:"
+tree.inorder{ |x| print " #{x.data}" }
+puts
+print "Postorder:"
+tree.postorder{ |x| print " #{x.data}" }
+puts
 
 
 
 #p build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 #tree = Tree.new([10, 9, 8 , 7, 6, 5, 4, 3, 2, 1])
 #tree = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-tree = Tree.new([45, 34, 25, 33, 30, 20, 16, 44, 29, 75, 3])
-tree.insert(tree.root, 7)
-tree.insert(tree.root, 6)
-tree.insert(tree.root, 10)
-tree.insert(tree.root, 1)
+#tree = Tree.new([45, 34, 25, 33, 30, 20, 16, 44, 29, 75, 3])
+#ree.insert(tree.root, 7)
+#tree.insert(tree.root, 6)
+#tree.insert(tree.root, 10)
+#tree.insert(tree.root, 1)
 #tree.delete(tree.root ,11)
 #p tree.find(tree.root, 23)
 #tree.level_order#{ |x| puts "Node: #{x.data}" }
@@ -253,8 +289,8 @@ tree.insert(tree.root, 1)
 #tree.preorder{ |x| puts "Node: #{x.data}" }
 #tree.postorder{ |x| puts "Node: #{x.data}" }
 #p tree.depth(tree.root)
-p tree.balanced?(tree.root)
-pretty_print(tree.root)
-tree.rebalance!
+#p tree.balanced?(tree.root)
+#pretty_print(tree.root)
+#tree.rebalance!
 
-pretty_print(tree.root)
+#pretty_print(tree.root)
