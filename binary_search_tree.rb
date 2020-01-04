@@ -10,9 +10,7 @@ end
 
 def build_tree(array, start=0, last=0)
   #binding.pry  
-  if start > last
-    return nil
-  end
+  return nil if start > last
   #sorts and removes duplicates
   array.sort!.uniq!
   start = 0
